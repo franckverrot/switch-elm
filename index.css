@@ -1,0 +1,53 @@
+#Page {
+    padding: 4% 10%;
+    margin: 0;
+    font-family: Verdana, Arial;
+}
+
+.indexHeader {
+    text-align: center;
+}
+
+.indexGithubLink {
+    text-align: center;
+}
+
+.indexContainer {
+    text-align: center;
+    width: 480px;
+    margin: 0px auto;
+}
+
+.indexDeadEndMessage {
+    text-align: center;
+    font-size: 24px;
+    padding: 5%;
+}
+
+.indexBox {
+    display: inline-block;
+    background-color: #0074D9;
+    margin: 2px 0px 0px 2px;
+    flex-grow: 1;
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.indexResetButton {
+    display: inline-block;
+    width: 100%;
+    margin: 0%;
+}
+
+.indexFooter {
+    font-size: 25px;
+    padding: 20px;
+}

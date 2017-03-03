@@ -9322,8 +9322,6 @@ var _rtfeldman$elm_css_helpers$Html_CssHelpers$Namespace = F4(
 
 var _user$project$CssTypes$indexNamespace = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('index');
 var _user$project$CssTypes$ResetButton = {ctor: 'ResetButton'};
-var _user$project$CssTypes$DeadEndMessage = {ctor: 'DeadEndMessage'};
-var _user$project$CssTypes$Footer = {ctor: 'Footer'};
 var _user$project$CssTypes$Container = {ctor: 'Container'};
 var _user$project$CssTypes$GithubLink = {ctor: 'GithubLink'};
 var _user$project$CssTypes$Header = {ctor: 'Header'};

@@ -30,12 +30,6 @@ css =
     , width (px 480)
     , margin2 (px 0) auto
     ]
-  , class DeadEndMessage
-    [
-      textAlign center
-    , fontSize (px 24)
-    , padding (pct 5)
-    ]
   , class Box
     [ display inlineBlock
     , backgroundColor blue
@@ -56,9 +50,5 @@ css =
     [ display inlineBlock
     , width (pct 100)
     , margin (pct 0)
-    ]
-  , class Footer
-    [ fontSize (px 25)
-    , padding (px 20)
     ]
   ]

@@ -9,8 +9,6 @@ type Classes
   | Header
   | GithubLink
   | Container
-  | Footer
-  | DeadEndMessage
   | ResetButton
 
 type Ids

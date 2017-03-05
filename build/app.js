@@ -9453,9 +9453,9 @@ var _user$project$Update$update = F2(
 						_1: {ctor: '[]'}
 					});
 			case 'ActivateBox':
-				var _p5 = _p2._0;
+				var _p6 = _p2._0;
 				var defaultTime = 10;
-				var newBox = A3(_user$project$Update$activateBox, _p5, defaultTime, model.boxes);
+				var newBox = A3(_user$project$Update$activateBox, _p6, defaultTime, model.boxes);
 				var events = function () {
 					var _p3 = newBox;
 					if (_p3.ctor === 'Nothing') {
@@ -9468,21 +9468,35 @@ var _user$project$Update$update = F2(
 						return {ctor: '[]'};
 					}
 				}();
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							boxes: function () {
-								var _p4 = newBox;
-								if (_p4.ctor === 'Nothing') {
-									return model.boxes;
-								} else {
-									return A3(_elm_lang$core$Array$set, _p5, _p4._0, model.boxes);
-								}
-							}()
-						}),
-					events);
+				var _p4 = model.status;
+				switch (_p4.ctor) {
+					case 'GameWon':
+						return A2(
+							_elm_lang$core$Platform_Cmd_ops['!'],
+							model,
+							{ctor: '[]'});
+					case 'GameLost':
+						return A2(
+							_elm_lang$core$Platform_Cmd_ops['!'],
+							model,
+							{ctor: '[]'});
+					default:
+						return A2(
+							_elm_lang$core$Platform_Cmd_ops['!'],
+							_elm_lang$core$Native_Utils.update(
+								model,
+								{
+									boxes: function () {
+										var _p5 = newBox;
+										if (_p5.ctor === 'Nothing') {
+											return model.boxes;
+										} else {
+											return A3(_elm_lang$core$Array$set, _p6, _p5._0, model.boxes);
+										}
+									}()
+								}),
+							events);
+				}
 			case 'Tick':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
@@ -9504,19 +9518,19 @@ var _user$project$Update$update = F2(
 					});
 			case 'CheckExploded':
 				var exploded = function (box) {
-					var _p6 = box;
-					switch (_p6._0.ctor) {
+					var _p7 = box;
+					switch (_p7._0.ctor) {
 						case 'Exploded':
 							return true;
 						case 'Enabled':
-							return _elm_lang$core$Native_Utils.cmp(_p6._0._0, 0) < 1;
+							return _elm_lang$core$Native_Utils.cmp(_p7._0._0, 0) < 1;
 						default:
 							return false;
 					}
 				};
-				var _p7 = _elm_lang$core$Array$length(
+				var _p8 = _elm_lang$core$Array$length(
 					A2(_elm_lang$core$Array$filter, exploded, model.boxes));
-				if (_p7 === 0) {
+				if (_p8 === 0) {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						model,
@@ -9531,16 +9545,16 @@ var _user$project$Update$update = F2(
 				}
 			case 'CheckForAllDisabled':
 				var notDisabled = function (box) {
-					var _p8 = box;
-					if (_p8._0.ctor === 'Disabled') {
+					var _p9 = box;
+					if (_p9._0.ctor === 'Disabled') {
 						return false;
 					} else {
 						return true;
 					}
 				};
-				var _p9 = _elm_lang$core$Array$length(
+				var _p10 = _elm_lang$core$Array$length(
 					A2(_elm_lang$core$Array$filter, notDisabled, model.boxes));
-				if (_p9 === 0) {
+				if (_p10 === 0) {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
@@ -9554,32 +9568,32 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			default:
-				var _p12 = _p2._1;
+				var _p13 = _p2._1;
 				var newBox = function (box) {
-					var _p10 = box;
-					switch (_p10._0.ctor) {
+					var _p11 = box;
+					switch (_p11._0.ctor) {
 						case 'Active':
 							return _user$project$Models_Box$Box(_user$project$Models_Box$Exploded);
 						case 'Enabled':
-							if (_p10._0._0 === 0) {
+							if (_p11._0._0 === 0) {
 								return _user$project$Models_Box$Box(_user$project$Models_Box$Exploded);
 							} else {
 								return _user$project$Models_Box$Box(_user$project$Models_Box$Disabled);
 							}
 						default:
-							return _p10;
+							return _p11;
 					}
 				}(
-					A2(_user$project$Update$boxAt, _p12, model.boxes));
+					A2(_user$project$Update$boxAt, _p13, model.boxes));
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{
-							boxes: A3(_elm_lang$core$Array$set, _p12, newBox, model.boxes),
+							boxes: A3(_elm_lang$core$Array$set, _p13, newBox, model.boxes),
 							status: function () {
-								var _p11 = newBox;
-								if (_p11._0.ctor === 'Exploded') {
+								var _p12 = newBox;
+								if (_p12._0.ctor === 'Exploded') {
 									return _user$project$Model$GameLost;
 								} else {
 									return model.status;

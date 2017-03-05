@@ -39,8 +39,7 @@ update msg model =
     PickAgain x ->
       model
       !
-      [ Random.generate ActivateBox (Random.int 0 ((length model.boxes) - 1))
-      ]
+      [ Random.generate ActivateBox (Random.int 0 ((length model.boxes) - 1)) ]
 
     ActivateBox x ->
       let defaultTime = 10
@@ -49,11 +48,16 @@ update msg model =
                           Nothing -> [ Task.perform PickAgain Time.now ]
                           Just newBox -> []
       in
-          { model
-          | boxes = case newBox of
-                      Nothing -> model.boxes
-                      Just newBox -> set x newBox model.boxes
-          } ! events
+          case model.status of
+            GameWon  -> model ! []
+
+            GameLost -> model ! []
+
+            _        -> { model
+                        | boxes = case newBox of
+                                    Nothing -> model.boxes
+                                    Just newBox -> set x newBox model.boxes
+                        } ! events
 
     Tick time -> { model
                  | boxes = Array.map tickBox model.boxes

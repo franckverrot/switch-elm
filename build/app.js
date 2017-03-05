@@ -9783,13 +9783,13 @@ var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
 			ctor: '::',
-			_0: A2(_elm_lang$core$Time$every, 700, _user$project$GameEvent$Tick),
+			_0: A2(_elm_lang$core$Time$every, 800, _user$project$GameEvent$Tick),
 			_1: {
 				ctor: '::',
-				_0: A2(_elm_lang$core$Time$every, 700, _user$project$GameEvent$CheckExploded),
+				_0: A2(_elm_lang$core$Time$every, 20, _user$project$GameEvent$CheckExploded),
 				_1: {
 					ctor: '::',
-					_0: A2(_elm_lang$core$Time$every, 700, _user$project$GameEvent$CheckForAllDisabled),
+					_0: A2(_elm_lang$core$Time$every, 20, _user$project$GameEvent$CheckForAllDisabled),
 					_1: {ctor: '[]'}
 				}
 			}

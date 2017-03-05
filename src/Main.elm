@@ -15,7 +15,7 @@ main = program { init          = (initialModel, Cmd.none)
 subscriptions : Model -> Sub GameEvent
 subscriptions model =
   Sub.batch
-    [ every 700 Tick
-    , every 700 CheckExploded
-    , every 700 CheckForAllDisabled
+    [ every 800 Tick
+    , every 20 CheckExploded
+    , every 20 CheckForAllDisabled
     ]

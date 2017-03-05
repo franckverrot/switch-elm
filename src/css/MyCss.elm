@@ -8,17 +8,17 @@ import Css.Namespace   exposing (namespace)
 import CssTypes   as T exposing (..)
 import Models.Box as M exposing (..)
 
-classForBox status computedColor =
+classForBox status bgColor fontColor =
   class (T.Box status)
     [ display inlineBlock
-    , backgroundColor computedColor
+    , backgroundColor bgColor
     , margin4 (px 2) (px 2) (px 2) (px 2)
     , width (px 36)
     , height (px 36)
     , textAlign center
-    , fontSize (px 15)
+    , fontSize (px 10)
     , fontWeight bold
-    , color silver
+    , color fontColor
     , textDecoration none
     , borderStyle none
     , cursor pointer
@@ -45,20 +45,36 @@ css =
       textAlign center
     ]
   , class Container
-    [
-      textAlign center
+    [ textAlign center
     , width (px 320)
     , margin2 (px 0) auto
     ]
-  , classForBox M.Inactive gray
-  , classForBox M.Exploded black
-  , classForBox M.Disabled yellow
+  , class DifficultyIndicator
+    [ textAlign right
+    , fontSize (px 8)
+    , color gray
+    ]
+  , classForBox M.Inactive gray silver
+  , classForBox M.Exploded black silver
+  , classForBox M.Disabled yellow black
   , class ResetButton
     [ display inlineBlock
-    , width (pct 100)
-    , margin (pct 0)
+    , backgroundColor gray
+    , margin4 (px 2) (px 2) (px 2) (px 2)
+    , width (px (320 / 2 - 4))
+    , height (px 36)
+    , textAlign center
+    , fontSize (px 10)
+    , fontWeight bold
+    , color black
+    , textDecoration none
+    , borderStyle none
+    , cursor pointer
+    , outline none
+    , float left
+    , padding (px 0)
     ]
   ])
-    ++ (toList <| initialize 11 (\i -> classForBox (M.Active i) red))
-    ++ (toList <| initialize 5 (\i -> classForBox (M.Enabled i) green))
+    ++ (toList <| initialize 11 (\i -> classForBox (M.Active i)  red silver))
+    ++ (toList <| initialize  5 (\i -> classForBox (M.Enabled i) green black))
   )

@@ -11,6 +11,7 @@ type Classes
   | GithubLink
   | Container
   | ResetButton
+  | DifficultyIndicator
 
 type Ids
   = Page

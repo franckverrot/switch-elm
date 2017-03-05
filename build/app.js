@@ -9334,6 +9334,7 @@ var _user$project$Models_Box$Box = function (a) {
 };
 
 var _user$project$CssTypes$indexNamespace = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('index');
+var _user$project$CssTypes$DifficultyIndicator = {ctor: 'DifficultyIndicator'};
 var _user$project$CssTypes$ResetButton = {ctor: 'ResetButton'};
 var _user$project$CssTypes$Container = {ctor: 'Container'};
 var _user$project$CssTypes$GithubLink = {ctor: 'GithubLink'};
@@ -9343,7 +9344,9 @@ var _user$project$CssTypes$Box = function (a) {
 };
 var _user$project$CssTypes$Page = {ctor: 'Page'};
 
-var _user$project$GameEvent$Reset = {ctor: 'Reset'};
+var _user$project$GameEvent$Reset = function (a) {
+	return {ctor: 'Reset', _0: a};
+};
 var _user$project$GameEvent$PickAgain = function (a) {
 	return {ctor: 'PickAgain', _0: a};
 };
@@ -9364,9 +9367,9 @@ var _user$project$GameEvent$BoxClicked = F2(
 		return {ctor: 'BoxClicked', _0: a, _1: b};
 	});
 
-var _user$project$Model$Model = F2(
-	function (a, b) {
-		return {boxes: a, status: b};
+var _user$project$Model$Model = F3(
+	function (a, b, c) {
+		return {boxes: a, status: b, tickInMilliseconds: c};
 	});
 var _user$project$Model$GameLost = {ctor: 'GameLost'};
 var _user$project$Model$GameWon = {ctor: 'GameWon'};
@@ -9376,7 +9379,8 @@ var _user$project$Model$initialModel = {
 		_elm_lang$core$Array$repeat,
 		8 * 8,
 		_user$project$Models_Box$Box(_user$project$Models_Box$Inactive)),
-	status: _user$project$Model$GameInProgress
+	status: _user$project$Model$GameInProgress,
+	tickInMilliseconds: 800
 };
 
 var _user$project$Update$tickBox = function (box) {
@@ -9429,7 +9433,9 @@ var _user$project$Update$update = F2(
 			case 'Reset':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
-					_user$project$Model$initialModel,
+					_elm_lang$core$Native_Utils.update(
+						_user$project$Model$initialModel,
+						{tickInMilliseconds: _p2._0}),
 					{ctor: '[]'});
 			case 'PickAgain':
 				return A2(
@@ -9604,11 +9610,11 @@ var _user$project$View$view = function (model) {
 		var _p2 = box;
 		switch (_p2._0.ctor) {
 			case 'Active':
-				return _elm_lang$core$Basics$toString(_p2._0._0);
+				return {ctor: '_Tuple2', _0: 'HOLD ', _1: _p2._0._0};
 			case 'Enabled':
-				return _elm_lang$core$Basics$toString(_p2._0._0);
+				return {ctor: '_Tuple2', _0: 'NOW ', _1: _p2._0._0};
 			default:
-				return '.';
+				return {ctor: '_Tuple2', _0: 'OFF', _1: 0};
 		}
 	};
 	var getBox = function (index) {
@@ -9620,29 +9626,96 @@ var _user$project$View$view = function (model) {
 	var boxHtml = function (index) {
 		return function (box) {
 			var _p3 = box;
-			return A2(
-				_elm_lang$html$Html$button,
-				{
-					ctor: '::',
-					_0: _user$project$View$class(
+			switch (_p3._0.ctor) {
+				case 'Disabled':
+					return A2(
+						_elm_lang$html$Html$button,
 						{
 							ctor: '::',
-							_0: _user$project$CssTypes$Box(_p3._0),
+							_0: _user$project$View$class(
+								{
+									ctor: '::',
+									_0: _user$project$CssTypes$Box(_user$project$Models_Box$Disabled),
+									_1: {ctor: '[]'}
+								}),
 							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Events$onClick(
-							A2(_user$project$GameEvent$BoxClicked, box, index)),
-						_1: {ctor: '[]'}
-					}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(
-						showBox(box)),
-					_1: {ctor: '[]'}
-				});
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(
+								_elm_lang$core$Tuple$first(
+									showBox(box))),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$br,
+									{ctor: '[]'},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(' '),
+									_1: {ctor: '[]'}
+								}
+							}
+						});
+				case 'Inactive':
+					return A2(
+						_elm_lang$html$Html$button,
+						{
+							ctor: '::',
+							_0: _user$project$View$class(
+								{
+									ctor: '::',
+									_0: _user$project$CssTypes$Box(_user$project$Models_Box$Inactive),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(' '),
+							_1: {ctor: '[]'}
+						});
+				default:
+					return A2(
+						_elm_lang$html$Html$button,
+						{
+							ctor: '::',
+							_0: _user$project$View$class(
+								{
+									ctor: '::',
+									_0: _user$project$CssTypes$Box(_p3._0),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(
+									A2(_user$project$GameEvent$BoxClicked, box, index)),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(
+								_elm_lang$core$Tuple$first(
+									showBox(box))),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$br,
+									{ctor: '[]'},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(
+										_elm_lang$core$Basics$toString(
+											_elm_lang$core$Tuple$second(
+												showBox(box)))),
+									_1: {ctor: '[]'}
+								}
+							}
+						});
+			}
 		}(
 			getBox(index));
 	};
@@ -9651,66 +9724,17 @@ var _user$project$View$view = function (model) {
 		if (_p4.ctor === 'GameInProgress') {
 			return A2(
 				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _user$project$View$class(
-						{
-							ctor: '::',
-							_0: _user$project$CssTypes$Container,
-							_1: {ctor: '[]'}
-						}),
-					_1: {ctor: '[]'}
-				},
+				{ctor: '[]'},
 				_elm_lang$core$Array$toList(
 					A2(_elm_lang$core$Array$initialize, 64, boxHtml)));
 		} else {
 			return A2(
-				_elm_lang$html$Html$div,
+				_elm_lang$html$Html$h2,
+				{ctor: '[]'},
 				{
 					ctor: '::',
-					_0: _user$project$View$class(
-						{
-							ctor: '::',
-							_0: _user$project$CssTypes$Container,
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Events$onClick(_user$project$GameEvent$Reset),
-						_1: {ctor: '[]'}
-					}
-				},
-				{
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$h2,
-						{ctor: '[]'},
-						{
-							ctor: '::',
-							_0: showResult(model.status),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$button,
-							{
-								ctor: '::',
-								_0: _user$project$View$class(
-									{
-										ctor: '::',
-										_0: _user$project$CssTypes$ResetButton,
-										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text('Play again'),
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
-					}
+					_0: showResult(model.status),
+					_1: {ctor: '[]'}
 				});
 		}
 	}();
@@ -9772,7 +9796,100 @@ var _user$project$View$view = function (model) {
 					}),
 				_1: {
 					ctor: '::',
-					_0: boxes,
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _user$project$View$class(
+								{
+									ctor: '::',
+									_0: _user$project$CssTypes$Container,
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: boxes,
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _user$project$View$class(
+											{
+												ctor: '::',
+												_0: _user$project$CssTypes$DifficultyIndicator,
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												'Difficulty level: ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(model.tickInMilliseconds),
+													'ms per tick'))),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _user$project$View$class(
+												{
+													ctor: '::',
+													_0: _user$project$CssTypes$ResetButton,
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onClick(
+													_user$project$GameEvent$Reset(model.tickInMilliseconds)),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Restart Game'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$button,
+											{
+												ctor: '::',
+												_0: _user$project$View$class(
+													{
+														ctor: '::',
+														_0: _user$project$CssTypes$ResetButton,
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onClick(
+														_user$project$GameEvent$Reset(model.tickInMilliseconds - 100)),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Harder'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}),
 					_1: {ctor: '[]'}
 				}
 			}
@@ -9783,7 +9900,7 @@ var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
 			ctor: '::',
-			_0: A2(_elm_lang$core$Time$every, 800, _user$project$GameEvent$Tick),
+			_0: A2(_elm_lang$core$Time$every, model.tickInMilliseconds, _user$project$GameEvent$Tick),
 			_1: {
 				ctor: '::',
 				_0: A2(_elm_lang$core$Time$every, 20, _user$project$GameEvent$CheckExploded),

@@ -9,5 +9,4 @@ type GameEvent = BoxClicked Box Int
                | CheckExploded Time
                | CheckForAllDisabled Time
                | PickAgain Time
-               --| Lost
-               | Reset
+               | Reset Time

@@ -17,6 +17,12 @@
     margin: 0px auto;
 }
 
+.indexDifficultyIndicator {
+    text-align: right;
+    font-size: 8px;
+    color: #AAAAAA;
+}
+
 .indexBox-Inactive {
     display: inline-block;
     background-color: #AAAAAA;
@@ -24,7 +30,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -42,7 +48,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -60,9 +66,9 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
-    color: #dddddd;
+    color: #111111;
     text-decoration: none;
     border-style: none;
     cursor: pointer;
@@ -73,8 +79,20 @@
 
 .indexResetButton {
     display: inline-block;
-    width: 100%;
-    margin: 0%;
+    background-color: #AAAAAA;
+    margin: 2px 2px 2px 2px;
+    width: 156px;
+    height: 36px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: #111111;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
 }
 
 .indexBox-Active-0 {
@@ -84,7 +102,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -102,7 +120,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -120,7 +138,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -138,7 +156,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -156,7 +174,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -174,7 +192,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -192,7 +210,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -210,7 +228,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -228,7 +246,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -246,7 +264,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -264,7 +282,7 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
@@ -282,9 +300,9 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
-    color: #dddddd;
+    color: #111111;
     text-decoration: none;
     border-style: none;
     cursor: pointer;
@@ -300,9 +318,9 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
-    color: #dddddd;
+    color: #111111;
     text-decoration: none;
     border-style: none;
     cursor: pointer;
@@ -318,9 +336,9 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
-    color: #dddddd;
+    color: #111111;
     text-decoration: none;
     border-style: none;
     cursor: pointer;
@@ -336,9 +354,9 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
-    color: #dddddd;
+    color: #111111;
     text-decoration: none;
     border-style: none;
     cursor: pointer;
@@ -354,9 +372,9 @@
     width: 36px;
     height: 36px;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
-    color: #dddddd;
+    color: #111111;
     text-decoration: none;
     border-style: none;
     cursor: pointer;

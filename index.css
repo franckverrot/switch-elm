@@ -1,5 +1,4 @@
 #Page {
-    padding: 4% 10%;
     margin: 0;
     font-family: Verdana, Arial;
 }
@@ -14,29 +13,354 @@
 
 .indexContainer {
     text-align: center;
-    width: 480px;
+    width: 320px;
     margin: 0px auto;
 }
 
-.indexBox {
+.indexBox-Inactive {
     display: inline-block;
-    background-color: #0074D9;
-    margin: 2px 0px 0px 2px;
-    flex-grow: 1;
-    width: 55px;
-    height: 55px;
+    background-color: #AAAAAA;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
     text-align: center;
-    font-size: 30px;
+    font-size: 15px;
     font-weight: bold;
     color: #dddddd;
     text-decoration: none;
     border-style: none;
     cursor: pointer;
     outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Exploded {
+    display: inline-block;
+    background-color: #111111;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Disabled {
+    display: inline-block;
+    background-color: #FFDC00;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
 }
 
 .indexResetButton {
     display: inline-block;
     width: 100%;
     margin: 0%;
+}
+
+.indexBox-Active-0 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-1 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-2 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-3 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-4 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-5 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-6 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-7 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-8 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-9 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Active-10 {
+    display: inline-block;
+    background-color: #FF4136;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Enabled-0 {
+    display: inline-block;
+    background-color: #2ECC40;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Enabled-1 {
+    display: inline-block;
+    background-color: #2ECC40;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Enabled-2 {
+    display: inline-block;
+    background-color: #2ECC40;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Enabled-3 {
+    display: inline-block;
+    background-color: #2ECC40;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
+}
+
+.indexBox-Enabled-4 {
+    display: inline-block;
+    background-color: #2ECC40;
+    margin: 2px 2px 2px 2px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #dddddd;
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    float: left;
+    padding: 0px;
 }

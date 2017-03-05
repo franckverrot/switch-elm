@@ -3,9 +3,10 @@ module CssTypes exposing ( Classes(..)
                          , indexNamespace)
 
 import Html.CssHelpers exposing (withNamespace)
+import Models.Box as M exposing (..)
 
 type Classes
-  = Box
+  = Box M.Status
   | Header
   | GithubLink
   | Container

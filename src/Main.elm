@@ -16,6 +16,6 @@ subscriptions : Model -> Sub GameEvent
 subscriptions model =
   Sub.batch
     [ every 700 Tick
-    , every 700 CheckExpired
+    , every 700 CheckExploded
     , every 700 CheckForAllDisabled
     ]

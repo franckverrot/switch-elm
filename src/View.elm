@@ -16,33 +16,38 @@ import GameEvent       exposing (..)
 view : Model -> Html GameEvent
 view model =
   let
-     getBox index = Maybe.withDefault (M.Box M.Inactive) <| get index model.boxes
-     showBox index = getBox index
-                     |> \b -> case b of
-                                (M.Box Inactive) -> "..."
-                                (M.Box Disabled) -> ":-)"
-                                (M.Box (Active x)) -> toString x
+     getBox index = get index model.boxes
+                     |> Maybe.withDefault (M.Box M.Inactive)
+     showBox box  = case box of
+                      (M.Box (Active x))  -> toString x
+                      (M.Box (Enabled x)) -> toString x
+                      _                   -> "."
 
      boxHtml : Int -> Html GameEvent
-     boxHtml index =  button
-                        ([ class [ CssTypes.Box ], onClick (BoxClicked (M.Box Inactive) index) ])
-                        [ text <| showBox index ]
+     boxHtml index = getBox index
+                       |> \box ->
+                         case box of
+                           (M.Box status) -> button
+                                             [ class [ CssTypes.Box status ]
+                                             , onClick (BoxClicked box index)
+                                             ]
+                                             [ text <| showBox box ]
 
      showResult : Model.Status -> Html GameEvent
      showResult result =
        case result of
-         Won -> text "You are amazing. Truly."
-         Lost -> text "Ouch, you're not really good at it. U MAD?"
-         InProgress -> text ""
+         GameWon -> text "You are amazing. Truly."
+         GameLost -> text "Ouch, you're not really good at it. U MAD?"
+         GameInProgress -> text ""
 
      boxes = case model.status of
-               InProgress -> div [ class [ Container ] ]
+               GameInProgress -> div [ class [ Container ] ]
                           (toList <| Array.initialize 64 boxHtml)
                x -> div
                          [ class [ Container ], onClick Reset ]
                          [ h2 [] [ showResult model.status ]
                          , button
-                           [ class [ CssTypes.Box, ResetButton ] ]
+                           [ class [ ResetButton ] ]
                            [ text "Play again" ] ]
   in
       div

@@ -10,11 +10,11 @@ type alias Model = { boxes  : Array Box
                    , status : Status
                    }
 
-type Status = InProgress
-            | Won
-            | Lost
+type Status = GameInProgress
+            | GameWon
+            | GameLost
 
 initialModel : Model
-initialModel = { boxes  = repeat 64 (Box Inactive)
-               , status = InProgress
+initialModel = { boxes  = repeat (8 * 8) (Box Inactive)
+               , status = GameInProgress
                }

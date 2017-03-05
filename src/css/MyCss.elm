@@ -1,19 +1,39 @@
 module MyCss exposing (..)
 
-import Css           exposing (..)
-import Css.Colors    exposing (..)
-import Css.Elements  exposing (body, li)
-import Css.Namespace exposing (namespace)
-import CssTypes      exposing (..)
+import Array           exposing (..)
+import Css             exposing (..)
+import Css.Colors      exposing (..)
+import Css.Elements    exposing (body, li)
+import Css.Namespace   exposing (namespace)
+import CssTypes   as T exposing (..)
+import Models.Box as M exposing (..)
+
+classForBox status computedColor =
+  class (T.Box status)
+    [ display inlineBlock
+    , backgroundColor computedColor
+    , margin4 (px 2) (px 2) (px 2) (px 2)
+    , width (px 36)
+    , height (px 36)
+    , textAlign center
+    , fontSize (px 15)
+    , fontWeight bold
+    , color silver
+    , textDecoration none
+    , borderStyle none
+    , cursor pointer
+    , outline none
+    , float left
+    , padding (px 0)
+    ]
 
 css =
   (stylesheet << namespace indexNamespace.name)
-  [ body
+  (([ body
     [
     ]
   , id Page
-    [ padding2 (pct 4) (pct 10)
-    , margin zero
+    [ margin zero
     , fontFamilies  ["Verdana", "Arial"]
     ]
   , class Header
@@ -27,28 +47,18 @@ css =
   , class Container
     [
       textAlign center
-    , width (px 480)
+    , width (px 320)
     , margin2 (px 0) auto
     ]
-  , class Box
-    [ display inlineBlock
-    , backgroundColor blue
-    , margin4 (px 2) (px 0) (px 0) (px 2)
-    , flexGrow (int 1)
-    , width (px 55)
-    , height (px 55)
-    , textAlign center
-    , fontSize (px 30)
-    , fontWeight bold
-    , color silver
-    , textDecoration none
-    , borderStyle none
-    , cursor pointer
-    , outline none
-    ]
+  , classForBox M.Inactive gray
+  , classForBox M.Exploded black
+  , classForBox M.Disabled yellow
   , class ResetButton
     [ display inlineBlock
     , width (pct 100)
     , margin (pct 0)
     ]
-  ]
+  ])
+    ++ (toList <| initialize 11 (\i -> classForBox (M.Active i) red))
+    ++ (toList <| initialize 5 (\i -> classForBox (M.Enabled i) green))
+  )

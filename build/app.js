@@ -9320,15 +9320,11 @@ var _rtfeldman$elm_css_helpers$Html_CssHelpers$Namespace = F4(
 		return {$class: a, classList: b, id: c, name: d};
 	});
 
-var _user$project$CssTypes$indexNamespace = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('index');
-var _user$project$CssTypes$ResetButton = {ctor: 'ResetButton'};
-var _user$project$CssTypes$Container = {ctor: 'Container'};
-var _user$project$CssTypes$GithubLink = {ctor: 'GithubLink'};
-var _user$project$CssTypes$Header = {ctor: 'Header'};
-var _user$project$CssTypes$Box = {ctor: 'Box'};
-var _user$project$CssTypes$Page = {ctor: 'Page'};
-
 var _user$project$Models_Box$Disabled = {ctor: 'Disabled'};
+var _user$project$Models_Box$Exploded = {ctor: 'Exploded'};
+var _user$project$Models_Box$Enabled = function (a) {
+	return {ctor: 'Enabled', _0: a};
+};
 var _user$project$Models_Box$Active = function (a) {
 	return {ctor: 'Active', _0: a};
 };
@@ -9336,8 +9332,16 @@ var _user$project$Models_Box$Inactive = {ctor: 'Inactive'};
 var _user$project$Models_Box$Box = function (a) {
 	return {ctor: 'Box', _0: a};
 };
-var _user$project$Models_Box$makeBox = _user$project$Models_Box$Box(
-	_user$project$Models_Box$Active(10));
+
+var _user$project$CssTypes$indexNamespace = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('index');
+var _user$project$CssTypes$ResetButton = {ctor: 'ResetButton'};
+var _user$project$CssTypes$Container = {ctor: 'Container'};
+var _user$project$CssTypes$GithubLink = {ctor: 'GithubLink'};
+var _user$project$CssTypes$Header = {ctor: 'Header'};
+var _user$project$CssTypes$Box = function (a) {
+	return {ctor: 'Box', _0: a};
+};
+var _user$project$CssTypes$Page = {ctor: 'Page'};
 
 var _user$project$GameEvent$Reset = {ctor: 'Reset'};
 var _user$project$GameEvent$PickAgain = function (a) {
@@ -9346,8 +9350,8 @@ var _user$project$GameEvent$PickAgain = function (a) {
 var _user$project$GameEvent$CheckForAllDisabled = function (a) {
 	return {ctor: 'CheckForAllDisabled', _0: a};
 };
-var _user$project$GameEvent$CheckExpired = function (a) {
-	return {ctor: 'CheckExpired', _0: a};
+var _user$project$GameEvent$CheckExploded = function (a) {
+	return {ctor: 'CheckExploded', _0: a};
 };
 var _user$project$GameEvent$ActivateBox = function (a) {
 	return {ctor: 'ActivateBox', _0: a};
@@ -9364,24 +9368,37 @@ var _user$project$Model$Model = F2(
 	function (a, b) {
 		return {boxes: a, status: b};
 	});
-var _user$project$Model$Lost = {ctor: 'Lost'};
-var _user$project$Model$Won = {ctor: 'Won'};
-var _user$project$Model$InProgress = {ctor: 'InProgress'};
+var _user$project$Model$GameLost = {ctor: 'GameLost'};
+var _user$project$Model$GameWon = {ctor: 'GameWon'};
+var _user$project$Model$GameInProgress = {ctor: 'GameInProgress'};
 var _user$project$Model$initialModel = {
 	boxes: A2(
 		_elm_lang$core$Array$repeat,
-		64,
+		8 * 8,
 		_user$project$Models_Box$Box(_user$project$Models_Box$Inactive)),
-	status: _user$project$Model$InProgress
+	status: _user$project$Model$GameInProgress
 };
 
 var _user$project$Update$tickBox = function (box) {
 	var _p0 = box;
-	if (_p0._0.ctor === 'Active') {
-		return _user$project$Models_Box$Box(
-			_user$project$Models_Box$Active(_p0._0._0 - 1));
-	} else {
-		return _p0;
+	switch (_p0._0.ctor) {
+		case 'Active':
+			if (_p0._0._0 === 1) {
+				return _user$project$Models_Box$Box(
+					_user$project$Models_Box$Enabled(4));
+			} else {
+				return _user$project$Models_Box$Box(
+					_user$project$Models_Box$Active(_p0._0._0 - 1));
+			}
+		case 'Enabled':
+			if (_p0._0._0 === 1) {
+				return _user$project$Models_Box$Box(_user$project$Models_Box$Exploded);
+			} else {
+				return _user$project$Models_Box$Box(
+					_user$project$Models_Box$Enabled(_p0._0._0 - 1));
+			}
+		default:
+			return _p0;
 	}
 };
 var _user$project$Update$boxAt = F2(
@@ -9391,12 +9408,14 @@ var _user$project$Update$boxAt = F2(
 			_user$project$Models_Box$Box(_user$project$Models_Box$Inactive),
 			A2(_elm_lang$core$Array$get, position, boxes));
 	});
-var _user$project$Update$activateBox = F2(
-	function (position, boxes) {
+var _user$project$Update$activateBox = F3(
+	function (position, time, boxes) {
 		return function (box) {
 			var _p1 = box;
 			if (_p1._0.ctor === 'Inactive') {
-				return _elm_lang$core$Maybe$Just(_user$project$Models_Box$makeBox);
+				return _elm_lang$core$Maybe$Just(
+					_user$project$Models_Box$Box(
+						_user$project$Models_Box$Active(time)));
 			} else {
 				return _elm_lang$core$Maybe$Nothing;
 			}
@@ -9429,7 +9448,8 @@ var _user$project$Update$update = F2(
 					});
 			case 'ActivateBox':
 				var _p5 = _p2._0;
-				var newBox = A2(_user$project$Update$activateBox, _p5, model.boxes);
+				var defaultTime = 10;
+				var newBox = A3(_user$project$Update$activateBox, _p5, defaultTime, model.boxes);
 				var events = function () {
 					var _p3 = newBox;
 					if (_p3.ctor === 'Nothing') {
@@ -9476,17 +9496,20 @@ var _user$project$Update$update = F2(
 								_elm_lang$core$Array$length(model.boxes) - 1)),
 						_1: {ctor: '[]'}
 					});
-			case 'CheckExpired':
-				var expired = function (box) {
+			case 'CheckExploded':
+				var exploded = function (box) {
 					var _p6 = box;
-					if (_p6._0.ctor === 'Active') {
-						return _elm_lang$core$Native_Utils.cmp(_p6._0._0, 0) < 1;
-					} else {
-						return false;
+					switch (_p6._0.ctor) {
+						case 'Exploded':
+							return true;
+						case 'Enabled':
+							return _elm_lang$core$Native_Utils.cmp(_p6._0._0, 0) < 1;
+						default:
+							return false;
 					}
 				};
 				var _p7 = _elm_lang$core$Array$length(
-					A2(_elm_lang$core$Array$filter, expired, model.boxes));
+					A2(_elm_lang$core$Array$filter, exploded, model.boxes));
 				if (_p7 === 0) {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
@@ -9497,7 +9520,7 @@ var _user$project$Update$update = F2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{status: _user$project$Model$Lost}),
+							{status: _user$project$Model$GameLost}),
 						{ctor: '[]'});
 				}
 			case 'CheckForAllDisabled':
@@ -9516,7 +9539,7 @@ var _user$project$Update$update = F2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{status: _user$project$Model$Won}),
+							{status: _user$project$Model$GameWon}),
 						{ctor: '[]'});
 				} else {
 					return A2(
@@ -9525,24 +9548,37 @@ var _user$project$Update$update = F2(
 						{ctor: '[]'});
 				}
 			default:
-				var _p11 = _p2._1;
+				var _p12 = _p2._1;
+				var newBox = function (box) {
+					var _p10 = box;
+					switch (_p10._0.ctor) {
+						case 'Active':
+							return _user$project$Models_Box$Box(_user$project$Models_Box$Exploded);
+						case 'Enabled':
+							if (_p10._0._0 === 0) {
+								return _user$project$Models_Box$Box(_user$project$Models_Box$Exploded);
+							} else {
+								return _user$project$Models_Box$Box(_user$project$Models_Box$Disabled);
+							}
+						default:
+							return _p10;
+					}
+				}(
+					A2(_user$project$Update$boxAt, _p12, model.boxes));
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{
-							boxes: function (newBox) {
-								return A3(_elm_lang$core$Array$set, _p11, newBox, model.boxes);
-							}(
-								function (box) {
-									var _p10 = box;
-									if (_p10._0.ctor === 'Active') {
-										return _user$project$Models_Box$Box(_user$project$Models_Box$Disabled);
-									} else {
-										return _p10;
-									}
-								}(
-									A2(_user$project$Update$boxAt, _p11, model.boxes)))
+							boxes: A3(_elm_lang$core$Array$set, _p12, newBox, model.boxes),
+							status: function () {
+								var _p11 = newBox;
+								if (_p11._0.ctor === 'Exploded') {
+									return _user$project$Model$GameLost;
+								} else {
+									return model.status;
+								}
+							}()
 						}),
 					{ctor: '[]'});
 		}
@@ -9556,12 +9592,23 @@ var _user$project$View$view = function (model) {
 	var showResult = function (result) {
 		var _p1 = result;
 		switch (_p1.ctor) {
-			case 'Won':
+			case 'GameWon':
 				return _elm_lang$html$Html$text('You are amazing. Truly.');
-			case 'Lost':
+			case 'GameLost':
 				return _elm_lang$html$Html$text('Ouch, you\'re not really good at it. U MAD?');
 			default:
 				return _elm_lang$html$Html$text('');
+		}
+	};
+	var showBox = function (box) {
+		var _p2 = box;
+		switch (_p2._0.ctor) {
+			case 'Active':
+				return _elm_lang$core$Basics$toString(_p2._0._0);
+			case 'Enabled':
+				return _elm_lang$core$Basics$toString(_p2._0._0);
+			default:
+				return '.';
 		}
 	};
 	var getBox = function (index) {
@@ -9570,51 +9617,38 @@ var _user$project$View$view = function (model) {
 			_user$project$Models_Box$Box(_user$project$Models_Box$Inactive),
 			A2(_elm_lang$core$Array$get, index, model.boxes));
 	};
-	var showBox = function (index) {
-		return function (b) {
-			var _p2 = b;
-			switch (_p2._0.ctor) {
-				case 'Inactive':
-					return '...';
-				case 'Disabled':
-					return ':-)';
-				default:
-					return _elm_lang$core$Basics$toString(_p2._0._0);
-			}
+	var boxHtml = function (index) {
+		return function (box) {
+			var _p3 = box;
+			return A2(
+				_elm_lang$html$Html$button,
+				{
+					ctor: '::',
+					_0: _user$project$View$class(
+						{
+							ctor: '::',
+							_0: _user$project$CssTypes$Box(_p3._0),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(
+							A2(_user$project$GameEvent$BoxClicked, box, index)),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						showBox(box)),
+					_1: {ctor: '[]'}
+				});
 		}(
 			getBox(index));
 	};
-	var boxHtml = function (index) {
-		return A2(
-			_elm_lang$html$Html$button,
-			{
-				ctor: '::',
-				_0: _user$project$View$class(
-					{
-						ctor: '::',
-						_0: _user$project$CssTypes$Box,
-						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$html$Html_Events$onClick(
-						A2(
-							_user$project$GameEvent$BoxClicked,
-							_user$project$Models_Box$Box(_user$project$Models_Box$Inactive),
-							index)),
-					_1: {ctor: '[]'}
-				}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text(
-					showBox(index)),
-				_1: {ctor: '[]'}
-			});
-	};
 	var boxes = function () {
-		var _p3 = model.status;
-		if (_p3.ctor === 'InProgress') {
+		var _p4 = model.status;
+		if (_p4.ctor === 'GameInProgress') {
 			return A2(
 				_elm_lang$html$Html$div,
 				{
@@ -9665,12 +9699,8 @@ var _user$project$View$view = function (model) {
 								_0: _user$project$View$class(
 									{
 										ctor: '::',
-										_0: _user$project$CssTypes$Box,
-										_1: {
-											ctor: '::',
-											_0: _user$project$CssTypes$ResetButton,
-											_1: {ctor: '[]'}
-										}
+										_0: _user$project$CssTypes$ResetButton,
+										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
 							},
@@ -9756,7 +9786,7 @@ var _user$project$Main$subscriptions = function (model) {
 			_0: A2(_elm_lang$core$Time$every, 700, _user$project$GameEvent$Tick),
 			_1: {
 				ctor: '::',
-				_0: A2(_elm_lang$core$Time$every, 700, _user$project$GameEvent$CheckExpired),
+				_0: A2(_elm_lang$core$Time$every, 700, _user$project$GameEvent$CheckExploded),
 				_1: {
 					ctor: '::',
 					_0: A2(_elm_lang$core$Time$every, 700, _user$project$GameEvent$CheckForAllDisabled),

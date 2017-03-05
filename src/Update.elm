@@ -15,16 +15,19 @@ boxAt position boxes =
     |> get position
     |> Maybe.withDefault (Box Inactive)
 
-activateBox : Int -> Array Box -> Maybe Box
-activateBox position boxes =
+activateBox : Int -> RemainingTime -> Array Box -> Maybe Box
+activateBox position time boxes =
   boxAt position boxes
     |> \box -> case box of
-                 (Box Inactive) -> Just <| makeBox
+                 (Box Inactive) -> Just <| Box (Active time)
                  any -> Nothing
 
 tickBox : Box -> Box
 tickBox box = case box of
+                (Box (Active 1)) -> Box <| (Enabled <| 4)
                 (Box (Active x)) -> Box <| (Active <| x - 1)
+                (Box (Enabled 1)) -> Box <| (Exploded)
+                (Box (Enabled x)) -> Box <| (Enabled <| x - 1)
                 any -> any
 
 update : GameEvent -> Model -> (Model, Cmd GameEvent)
@@ -39,10 +42,11 @@ update msg model =
       ]
 
     ActivateBox x ->
-      let newBox = activateBox x model.boxes
-          events = case newBox of
-                     Nothing -> [ Task.perform PickAgain Time.now ]
-                     Just newBox -> []
+      let defaultTime = 10
+          newBox      = activateBox x defaultTime model.boxes
+          events      = case newBox of
+                          Nothing -> [ Task.perform PickAgain Time.now ]
+                          Just newBox -> []
       in
           { model
           | boxes = case newBox of
@@ -56,16 +60,17 @@ update msg model =
                  [ Random.generate ActivateBox (Random.int 0 ((length model.boxes) - 1))
                  ]
 
-    CheckExpired time ->
+    CheckExploded time ->
       let
-          expired : Box -> Bool
-          expired box = case box of
-                          (Box (Active x)) -> x <= 0
-                          any -> False
+          exploded : Box -> Bool
+          exploded box = case box of
+                           (Box Exploded)    -> True
+                           (Box (Enabled x)) -> x <= 0
+                           any -> False
       in
-          case length <| filter expired model.boxes of
+          case length <| filter exploded model.boxes of
             0  -> model ! []
-            _  -> { model | status = Lost } ! []
+            _  -> { model | status = GameLost } ! []
 
 
     CheckForAllDisabled time ->
@@ -76,15 +81,21 @@ update msg model =
                               any -> True
       in
           case length <| filter notDisabled model.boxes of
-            0  -> { model | status = Won } ! []
+            0  -> { model | status = GameWon } ! []
             _  -> model ! []
 
 
     BoxClicked (Box status) index ->
-        { model
-        | boxes = boxAt index model.boxes
-                    |> (\box -> case box of
-                                 (Box (Active x)) -> Box Disabled
-                                 any -> any)
-                    |> \newBox -> set index newBox model.boxes
-        } ! []
+        let newBox = boxAt index model.boxes
+                      |> (\box -> case box of
+                                   Box (Active x) -> Box Exploded
+                                   Box (Enabled 0) -> Box Exploded -- checking now can save a new event
+                                   Box (Enabled x) -> Box Disabled
+                                   any -> any)
+        in
+            { model
+            | boxes = set index newBox model.boxes
+            , status = case newBox of
+                         Box Exploded -> GameLost
+                         any -> model.status
+            } ! []

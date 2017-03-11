@@ -39,7 +39,7 @@ view model =
                                                    [ text <| " "]
                            (M.Box status) -> button
                                                [ class [ CssTypes.Box status ]
-                                               , onClick (BoxClicked box index)
+                                               , onMouseDown (BoxClicked box index)
                                                ]
                                                [ text <| Tuple.first <| showBox box
                                                , br [] []

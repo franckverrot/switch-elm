@@ -9705,7 +9705,7 @@ var _user$project$View$view = function (model) {
 								}),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$html$Html_Events$onClick(
+								_0: _elm_lang$html$Html_Events$onMouseDown(
 									A2(_user$project$GameEvent$BoxClicked, box, index)),
 								_1: {ctor: '[]'}
 							}

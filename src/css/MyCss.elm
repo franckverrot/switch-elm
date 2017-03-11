@@ -25,6 +25,7 @@ classForBox status bgColor fontColor =
     , outline none
     , float left
     , padding (px 0)
+    , property "touch-action" "manipulation"
     ]
 
 css =

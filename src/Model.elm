@@ -19,5 +19,5 @@ type Status = GameInProgress
 initialModel : Model
 initialModel = { boxes  = repeat (8 * 8) (Box Inactive)
                , status = GameInProgress
-               , tickInMilliseconds = 800
+               , tickInMilliseconds = 700
                }

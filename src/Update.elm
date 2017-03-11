@@ -33,7 +33,7 @@ tickBox box = case box of
 update : GameEvent -> Model -> (Model, Cmd GameEvent)
 update msg model =
   case msg of
-    Reset time -> { initialModel | tickInMilliseconds = time }
+    Reset time -> { initialModel | tickInMilliseconds = max 100 time }
                   ! []
 
     PickAgain x ->

@@ -9380,7 +9380,7 @@ var _user$project$Model$initialModel = {
 		8 * 8,
 		_user$project$Models_Box$Box(_user$project$Models_Box$Inactive)),
 	status: _user$project$Model$GameInProgress,
-	tickInMilliseconds: 800
+	tickInMilliseconds: 700
 };
 
 var _user$project$Update$tickBox = function (box) {
@@ -9435,7 +9435,9 @@ var _user$project$Update$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						_user$project$Model$initialModel,
-						{tickInMilliseconds: _p2._0}),
+						{
+							tickInMilliseconds: A2(_elm_lang$core$Basics$max, 100, _p2._0)
+						}),
 					{ctor: '[]'});
 			case 'PickAgain':
 				return A2(
